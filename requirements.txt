@@ -1,1 +1,4 @@
 Flask==2.3.3 
+requests
+gunicorn
+numpy==1.26.4
