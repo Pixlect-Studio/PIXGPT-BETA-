@@ -1,0 +1,70 @@
+Pixlect Studio: Building Digital Experiences Without Limits
+Pixlect Studio is an indie development team focused on creating games, web tools, and digital experiences across multiple platforms. The studio builds fast, simple, and accessible products designed to work seamlessly for everyone — whether in the browser today or on mobile platforms in the future.
+
+What We Do
+Pixlect Studio creates:
+
+🎮 Games
+
+🛠️ Web tools
+
+📱 Future mobile applications (Android and beyond)
+
+The studio's goal is to make products that are:
+
+Fast ⚡
+
+Clean ✨
+
+Accessible 🌍
+
+Our Philosophy
+Pixlect Studio believes in:
+
+Simplicity over complexity
+
+Performance over bloat
+
+Creativity over limits
+
+Every project the team creates is part of a bigger vision — to build meaningful and enjoyable digital experiences.
+
+How We Build
+The studio focuses on strong, flexible technologies:
+
+HTML
+
+CSS
+
+JavaScript
+
+Canvas API
+
+As the team grows, they aim to expand into mobile development and broader platforms.
+
+The Team
+Pixlect Studio is powered by:
+
+Aaraiz-Adnan — Owner & Lead Developer
+
+DXB-Gamer — Co-Owner & Developer
+
+Projects
+The studio maintains an active GitHub presence with 22 public repositories. Notable projects include:
+
+PIXLECT-Chats — A Google Workspace‑style web application that combines email, live chat, and contact management in one platform. Users can sign up with a custom @pixlect.com address or use Google Sign‑In.
+
+ConsoleCreator — A retro-inspired tycoon game where players build their console empire from a tiny startup to an industry giant by designing hardware, coding operating systems, researching new tech, and launching generations of consoles.
+
+CPS-TEST — A fun way to put clicking, space bar clicking, and scrolling to the ultimate test with realtime leaderboards.
+
+Apex-Drifter — A game built with HTML.
+
+Online Presence
+Pixlect Studio is built across the Internet, bringing ideas together without limits. The team maintains a GitHub organization where they share their work and collaborate on projects.
+
+Final Note
+Pixlect Studio is constantly evolving — expanding beyond the web and into new platforms and possibilities.
+
+Built across the world. Created without limits. 
+

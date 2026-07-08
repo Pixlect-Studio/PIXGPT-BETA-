@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 PIXGPT Debug</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: #0a0a0a; color: #ddd; padding: 20px; display: flex; justify-content: center; }
+        .container { max-width: 1000px; width: 100%; background: #1a1a1a; padding: 24px; border-radius: 16px; border: 1px solid #2a2a2a; }
+        h1 { color: #10a37f; font-weight: 300; }
+        h2 { color: #10a37f; font-weight: 300; margin-top: 24px; border-bottom: 1px solid #2a2a2a; padding-bottom: 8px; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .stat-card { background: #111; padding: 12px; border-radius: 8px; border-left: 3px solid #10a37f; }
+        .stat-card .label { color: #888; font-size: 0.8rem; }
+        .stat-card .value { font-size: 1.2rem; font-weight: 600; color: #eee; }
+        .file-list { list-style: none; padding: 0; }
+        .file-list li { background: #111; padding: 8px 12px; margin: 4px 0; border-radius: 6px; display: flex; justify-content: space-between; border: 1px solid #2a2a2a; }
+        .file-list .size { color: #888; font-size: 0.8rem; }
+        .sample { background: #111; padding: 12px; border-radius: 8px; border: 1px solid #2a2a2a; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; max-height: 200px; overflow-y: auto; }
+        .back-link { display: inline-block; margin-top: 20px; color: #10a37f; text-decoration: none; border: 1px solid #10a37f; padding: 6px 16px; border-radius: 30px; transition: 0.2s; }
+        .back-link:hover { background: #10a37f; color: #fff; }
+        .refresh-btn { background: #333; border: none; color: #fff; padding: 6px 16px; border-radius: 30px; cursor: pointer; font-size: 0.8rem; }
+        .refresh-btn:hover { background: #444; }
+        .flex-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="flex-row">
+        <h1>🔍 PIXGPT Debug</h1>
+        <button class="refresh-btn" onclick="location.reload()">⟳ Refresh</button>
+    </div>
+    <p style="color:#888;">Your AI's brain – what it's learned and where from.</p>
+
+    <div class="stats">
+        <div class="stat-card"><div class="label">📁 Training Files</div><div class="value">{{ files|length }}</div></div>
+        <div class="stat-card"><div class="label">🧠 Markov Entries</div><div class="value">{{ markov_entries }}</div></div>
+        <div class="stat-card"><div class="label">📚 Markov Vocab</div><div class="value">{{ vocab_size }}</div></div>
+        <div class="stat-card"><div class="label">🤖 RNN Status</div><div class="value">{{ '✅ Trained' if rnn_trained else '❌ Not Trained' }}</div></div>
+        <div class="stat-card"><div class="label">📐 RNN Hidden Size</div><div class="value">{{ rnn_hidden }}</div></div>
+        <div class="stat-card"><div class="label">📊 Pattern Rules</div><div class="value">{{ pattern_count }}</div></div>
+    </div>
+
+    <h2>📁 Training Files Used</h2>
+    {% if files %}
+        <ul class="file-list">
+            {% for file in files %}
+                <li><span>{{ file.name }}</span><span class="size">{{ (file.size / 1024)|round(1) }} KB</span></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p style="color:#666;">No .txt files found in <code>Training/</code> folder.</p>
+    {% endif %}
+
+    <h2>🧠 Markov Chain Sample</h2>
+    {% if sample_entries %}
+        <div class="sample">
+            {% for key, values in sample_entries %}
+                <div><span style="color:#10a37f;">{{ key }}</span> → [{{ values|join(', ') }}]</div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="color:#666;">No Markov entries yet.</p>
+    {% endif %}
+
+    <h2>🤖 RNN Generation (sample)</h2>
+    {% if rnn_trained %}
+        <div class="sample">{{ sample_text }}</div>
+    {% else %}
+        <p style="color:#666;">RNN not trained.</p>
+    {% endif %}
+
+    <a href="/" class="back-link">← Back to Chat</a>
+</div>
+</body>
+</html>
