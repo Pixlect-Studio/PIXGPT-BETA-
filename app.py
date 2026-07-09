@@ -1,13 +1,19 @@
-# app.py – Browser‑compatible version
+# app.py – Flask + Gunicorn entrypoint
+import os
 import re
 import random
+from flask import Flask, request, jsonify
+
 from ai_module import AIStorage
 
-# Load the AI from storage.json (will be in virtual FS)
-storage = AIStorage('storage.json')
+app = Flask(__name__)
 
-def process_message(message):
-    """Called from JavaScript – returns a string response."""
+# Robust storage path: always resolve relative to this file
+_STORAGE_PATH = os.path.join(os.path.dirname(__file__), 'storage.json')
+storage = AIStorage(_STORAGE_PATH)
+
+def process_message(message: str) -> str:
+    """Returns a string response."""
     if not message:
         return "Please say something."
 
@@ -17,13 +23,13 @@ def process_message(message):
     markov_resp = storage.markov.generate(
         seed_words=words[-2:] if len(words) >= 2 else None
     )
-    if markov_resp and len(markov_resp) > 0:
+    if markov_resp:
         return markov_resp
 
     # 2. Try RNN
     seed = message[:10] if len(message) > 5 else 'the'
     rnn_resp = storage.rnn.generate(seed, length=30)
-    if rnn_resp and len(rnn_resp) > 0:
+    if rnn_resp:
         return rnn_resp
 
     # 3. Pattern Matcher
@@ -40,3 +46,18 @@ def process_message(message):
         "I'm still learning, but I'm paying attention."
     ]
     return random.choice(fallbacks)
+
+@app.get('/')
+def index():
+    return jsonify({"status": "ok"})
+
+@app.post('/api/message')
+def api_message():
+    payload = request.get_json(silent=True) or {}
+    message = payload.get('message', '')
+    return jsonify({"response": process_message(message)})
+
+if __name__ == '__main__':
+    # Local dev only; Railway uses gunicorn
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)), debug=False)
+
