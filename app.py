@@ -49,13 +49,32 @@ def process_message(message: str) -> str:
 
 @app.get('/')
 def index():
-    return jsonify({"status": "ok"})
+    # Serve front-end (needed for Railway)
+    index_path = os.path.join(os.path.dirname(__file__), 'index.html')
+    with open(index_path, 'r', encoding='utf-8') as f:
+        return f.read()
 
-@app.post('/api/message')
-def api_message():
+
+
+@app.post('/chat')
+def chat_message():
     payload = request.get_json(silent=True) or {}
     message = payload.get('message', '')
     return jsonify({"response": process_message(message)})
+
+
+# Backwards-compatible alias
+@app.post('/api/message')
+def api_message():
+    return chat_message()
+
+
+@app.get('/status')
+def status():
+    # Pretty-print JSON for health checks
+    return jsonify({"status": "ok"})
+
+
 
 if __name__ == '__main__':
     # Local dev only; Railway uses gunicorn
